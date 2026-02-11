@@ -184,9 +184,9 @@ option.
 
 - The application is a client-side static site with no backend
   server. All PyPI lookups happen directly from the browser.
-- PyPI provides a publicly accessible mechanism (e.g., JSON API or
-  HTTP status codes) to determine package name availability without
-  requiring authentication.
+- PyPI provides a publicly accessible JSON API that can be called
+  directly from the browser without CORS issues or authentication.
+  No proxy is required.
 - The application does not store or persist any user data or search
   history.
 
@@ -201,3 +201,7 @@ option.
 - Q: What should the debounce delay duration be? → A: 300ms
   (industry standard balance of responsiveness vs. request
   reduction).
+- Q: How should the app access the PyPI API from the browser
+  (CORS proxy, direct fetch, etc.)? → A: Direct fetch — no CORS
+  proxy needed. Verified locally that PyPI API calls work directly
+  from the browser.
