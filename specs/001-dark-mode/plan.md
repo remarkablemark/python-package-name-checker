@@ -84,6 +84,22 @@ index.html                             # Updated: inline script for flash-free t
 
 **Structure Decision**: Single project structure following existing patterns. New `ThemeToggle` component follows the established `src/components/ComponentName/` directory convention. New `useTheme` hook follows `src/hooks/` pattern. Theme types go in `src/types/theme.ts` alongside existing `pypi.ts`.
 
+## Post-Design Constitution Re-Check
+
+_Re-evaluated after Phase 1 design completion._
+
+| Principle                   | Status  | Post-Design Notes                                                                                                   |
+| --------------------------- | ------- | ------------------------------------------------------------------------------------------------------------------- |
+| I. Component-First          | ✅ PASS | `ThemeToggle/` has `.tsx`, `.types.ts`, `.test.tsx`, `index.ts`. Functional component, props destructured.          |
+| II. Accessibility & UX      | ✅ PASS | Native `<button>`, dynamic `aria-label`, keyboard-native. Dark palette meets WCAG AA 4.5:1 (slate-200 on gray-900). |
+| III. Test-First             | ✅ PASS | Tests planned for `useTheme` hook, `ThemeToggle` component, and updated existing component dark variants.           |
+| IV. Type Safety             | ✅ PASS | `ThemeMode` and `ResolvedTheme` union types. `UseThemeReturn` interface. No implicit any.                           |
+| V. Simplicity & Performance | ✅ PASS | Zero new runtime dependencies. 3 inline SVGs. No `useMemo`/`useCallback`. Hook-only state (no Context).             |
+| Technology Constraints      | ✅ PASS | No stack changes. Only `index.html` modification is a small inline script.                                          |
+| Development Workflow        | ✅ PASS | All gates (lint, tsc, test:ci, build) will pass.                                                                    |
+
+**Post-design gate result**: ✅ ALL PASS — no violations, no complexity tracking needed.
+
 ## Complexity Tracking
 
 > No constitution violations — this section is intentionally empty.
