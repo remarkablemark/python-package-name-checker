@@ -148,6 +148,8 @@ option.
   input changes before a pending lookup completes.
 - **FR-012**: System MUST debounce the input so that lookups are
   only triggered after the user stops typing for 300ms.
+- **FR-013**: System MUST trigger a lookup for any non-empty valid
+  input, regardless of length (no minimum character threshold).
 
 ### Key Entities
 
@@ -205,3 +207,6 @@ option.
   (CORS proxy, direct fetch, etc.)? → A: Direct fetch — no CORS
   proxy needed. Verified locally that PyPI API calls work directly
   from the browser.
+- Q: What is the minimum input length before triggering a lookup?
+  → A: No minimum — trigger lookup for any non-empty valid input
+  (1 character is sufficient).

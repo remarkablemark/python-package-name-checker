@@ -31,5 +31,6 @@
 
 ## Notes
 
-- All items pass validation. Spec is ready for `/speckit.clarify` or `/speckit.plan`.
+- All items pass validation. Spec is ready for `/speckit.plan`.
 - Assumptions section documents key architectural decisions (client-side only, no auth, no persistence).
+- Clarification session completed (2026-02-10): 4 clarifications recorded (realtime debounce interaction model, 300ms delay, direct PyPI fetch, no minimum input length).
