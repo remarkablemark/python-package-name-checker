@@ -9,7 +9,7 @@
 
 ### User Story 1 - Toggle Dark Mode (Priority: P1)
 
-A user visits the Python Package Name Checker and prefers a dark color scheme to reduce eye strain or match their system preferences. They click a toggle button to switch the interface from light mode to dark mode. All UI elements — background, text, input field, borders, result messages, and links — update to a dark-themed palette. The toggle state persists so that returning to the page later retains their preference.
+A user visits the Python Package Name Checker and prefers a dark color scheme to reduce eye strain or match their system preferences. They use a three-state theme control to switch between light, dark, or system mode. When set to light or dark, the app uses that theme regardless of OS settings. When set to system, the app follows the OS color scheme preference dynamically. All UI elements — background, text, input field, borders, result messages, and links — update to match the active theme. The selected mode persists so that returning to the page later retains their preference. The default selection is "system".
 
 **Why this priority**: This is the core functionality of the feature. Without a working toggle and properly themed UI, there is no dark mode.
 
@@ -17,10 +17,11 @@ A user visits the Python Package Name Checker and prefers a dark color scheme to
 
 **Acceptance Scenarios**:
 
-1. **Given** the app is in light mode, **When** the user clicks the dark mode toggle, **Then** the background changes to a dark color, text changes to a light color, and all UI elements update to their dark variants.
-2. **Given** the app is in dark mode, **When** the user clicks the dark mode toggle, **Then** the interface reverts to light mode with the original color scheme.
-3. **Given** the user has toggled dark mode on, **When** they close and reopen the page, **Then** the app loads in dark mode.
-4. **Given** the user has never visited the app before, **When** they load the page, **Then** the app defaults to the system's preferred color scheme (light or dark).
+1. **Given** the app is in any mode, **When** the user selects "dark" from the theme control, **Then** the background changes to a dark color, text changes to a light color, and all UI elements update to their dark variants.
+2. **Given** the app is in any mode, **When** the user selects "light" from the theme control, **Then** the interface renders in light mode with the original color scheme.
+3. **Given** the app is in any mode, **When** the user selects "system" from the theme control, **Then** the app follows the OS color scheme preference dynamically.
+4. **Given** the user has selected "dark" mode, **When** they close and reopen the page, **Then** the app loads in dark mode.
+5. **Given** the user has never visited the app before, **When** they load the page, **Then** the app defaults to "system" mode, rendering according to the OS color scheme preference.
 
 ---
 
@@ -67,11 +68,11 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 
 ### Functional Requirements
 
-- **FR-001**: System MUST provide a visible toggle control that switches between light and dark color schemes.
+- **FR-001**: System MUST provide a visible three-state theme control that allows switching between light, dark, and system modes.
 - **FR-002**: System MUST apply dark-themed colors to all UI elements (background, text, input field, borders, result messages, links, spinner) when dark mode is active.
 - **FR-003**: System MUST persist the user's theme preference in local storage so it survives page reloads and return visits.
-- **FR-004**: System MUST detect the user's OS-level color scheme preference when no stored preference exists.
-- **FR-005**: Stored user preference MUST take precedence over the OS-level color scheme preference.
+- **FR-004**: System MUST detect the user's OS-level color scheme preference and apply it dynamically when the theme is set to "system" mode.
+- **FR-005**: When the user explicitly selects "light" or "dark", that choice MUST override the OS-level color scheme preference. When set to "system", the OS preference MUST be followed dynamically.
 - **FR-006**: System MUST ensure all text and interactive elements in dark mode meet WCAG 2.1 AA contrast ratio requirements.
 - **FR-007**: The dark mode toggle MUST be keyboard accessible and announce its state to screen readers.
 - **FR-008**: System MUST handle the absence of localStorage gracefully, falling back to system preference without errors.
@@ -79,14 +80,20 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 
 ### Key Entities
 
-- **Theme Preference**: Represents the user's chosen color scheme (light or dark). Stored locally. Relates to the toggle control and the overall UI rendering.
+- **Theme Preference**: Represents the user's chosen theme mode (light, dark, or system). Stored locally. Default value is "system". Relates to the theme control and the overall UI rendering.
 - **System Color Scheme**: The OS-level color scheme preference detected via media query. Used as the default when no stored preference exists.
+
+## Clarifications
+
+### Session 2026-02-11
+
+- Q: Should the toggle be two-state (light/dark) or three-state (light/dark/system)? → A: Three-state toggle (light / dark / system). "System" follows OS preference dynamically. Default is "system".
 
 ## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 
-- **SC-001**: Users can toggle between light and dark mode in a single click/tap, with the UI updating within 100ms.
+- **SC-001**: Users can switch between light, dark, and system modes in a single click/tap, with the UI updating within 100ms.
 - **SC-002**: The app correctly detects and applies the OS color scheme preference on first visit for 100% of browsers that support the relevant media query.
 - **SC-003**: Theme preference persists across page reloads — 100% of return visits load the previously selected theme.
 - **SC-004**: All text elements in dark mode achieve a minimum contrast ratio of 4.5:1 against their background (WCAG 2.1 AA).
