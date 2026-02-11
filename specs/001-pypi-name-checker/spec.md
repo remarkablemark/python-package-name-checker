@@ -165,6 +165,11 @@ option.
   display a disclaimer note (e.g., "Note: PyPI may still reject
   names too similar to existing packages") to set correct user
   expectations.
+- **FR-015**: The layout MUST be mobile-first and responsive.
+  Input text size and padding MUST scale down on screens below
+  640px (`sm` breakpoint) while maintaining the hero-style size on
+  768px+ (`md` breakpoint). Minimum supported screen width is
+  320px. The input MUST be full-width on mobile.
 
 ### Key Entities
 
@@ -246,3 +251,7 @@ option.
   PyPI may still reject names too similar to existing packages.
   The API does not expose similarity data, so this is informational
   only.
+- Q: How should mobile responsiveness be handled? → A:
+  Mobile-first with scaled text — reduce input text size and
+  padding below `sm` (640px), hero-size on `md`+ (768px+),
+  minimum supported width 320px, full-width input on mobile.
