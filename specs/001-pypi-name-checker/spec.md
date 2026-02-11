@@ -145,8 +145,12 @@ option.
   naming rules before making a network request.
 - **FR-007**: System MUST display actionable validation error
   messages for invalid input.
-- **FR-008**: System MUST handle network errors gracefully and
-  display a user-friendly error message.
+- **FR-008**: System MUST handle errors with categorized messages:
+  HTTP 429 MUST display "Too many requests, please wait and try
+  again"; HTTP 5xx MUST display "PyPI is temporarily unavailable,
+  please try again later"; network failures and all other
+  unexpected errors MUST display a generic "Something went wrong,
+  please try again" message.
 - **FR-009**: System MUST allow the user to retry after a failed
   lookup.
 - **FR-010**: System MUST normalize package names (hyphens,
@@ -229,3 +233,7 @@ option.
   padding), centered on the page as the dominant visual element.
 - Q: What style of loading indicator should be used? → A: Inline
   spinner inside the input field (right side).
+- Q: How should non-200/404 HTTP responses be handled? → A:
+  Categorized errors — 429 shows "Please wait and try again",
+  5xx shows "PyPI temporarily unavailable", all others show a
+  generic error message.
