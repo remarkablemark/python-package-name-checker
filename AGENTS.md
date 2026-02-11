@@ -24,7 +24,6 @@ You're an expert engineer for this React app.
   - Prettier with Tailwind plugin
   - React Compiler (babel-plugin-react-compiler)
 - **File Structure:**
-  - `public/` – app assets
   - `src/` – app code
     - `src/components/` – React components (each in own directory with barrel export)
     - `src/hooks/` – custom React hooks
