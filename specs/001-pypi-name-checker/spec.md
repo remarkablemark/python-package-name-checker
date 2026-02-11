@@ -161,6 +161,10 @@ option.
   only triggered after the user stops typing for 300ms.
 - **FR-013**: System MUST trigger a lookup for any non-empty valid
   input, regardless of length (no minimum character threshold).
+- **FR-014**: When a name shows as available, the system MUST
+  display a disclaimer note (e.g., "Note: PyPI may still reject
+  names too similar to existing packages") to set correct user
+  expectations.
 
 ### Key Entities
 
@@ -237,3 +241,8 @@ option.
   Categorized errors — 429 shows "Please wait and try again",
   5xx shows "PyPI temporarily unavailable", all others show a
   generic error message.
+- Q: How should PyPI's "name too similar" rejection be handled?
+  → A: Show a disclaimer when a name is available, noting that
+  PyPI may still reject names too similar to existing packages.
+  The API does not expose similarity data, so this is informational
+  only.
