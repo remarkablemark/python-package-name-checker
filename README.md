@@ -1,10 +1,12 @@
-# python-package-name-checker
+# python package name checker
 
 [![build](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/build.yml)
 [![test](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/test.yml/badge.svg)](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/remarkablemark/python-package-name-checker/graph/badge.svg?token=9bEsyRuaR6)](https://codecov.io/gh/remarkablemark/python-package-name-checker)
 
-Vite React Tailwind Template
+🔍 Check if a Python package name is available on PyPI:
+
+- [Site](https://remarkablemark.org/python-package-name-checker/)
 
 ## Install
 
