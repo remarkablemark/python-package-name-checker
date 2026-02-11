@@ -92,6 +92,7 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 - Q: Where should the theme control be placed in the UI? → A: Bottom-right corner, fixed position (floating).
 - Q: Should the app track OS theme changes live when set to "system" mode? → A: Yes, react in real-time to OS theme changes while the page is open.
 - Q: What widget type should the theme control be? → A: Cycling icon button. Single button that cycles through system → light → dark on each click. Icon changes to reflect current mode (monitor, sun, moon).
+- Q: Where is the theme preference state stored? → A: localStorage. Persists indefinitely, synchronous read for flash-free loading.
 
 ## Success Criteria _(mandatory)_
 
