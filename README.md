@@ -1,7 +1,7 @@
-# vite-react-tailwind-template
+# python-package-name-checker
 
-[![build](https://github.com/remarkablemark/vite-react-tailwind-template/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablemark/vite-react-tailwind-template/actions/workflows/build.yml)
-[![test](https://github.com/remarkablemark/vite-react-tailwind-template/actions/workflows/test.yml/badge.svg)](https://github.com/remarkablemark/vite-react-tailwind-template/actions/workflows/test.yml)
+[![build](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/build.yml)
+[![test](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/test.yml/badge.svg)](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/test.yml)
 
 Vite React Tailwind Template
 
@@ -10,8 +10,8 @@ Vite React Tailwind Template
 Clone the repository:
 
 ```sh
-git clone https://github.com/remarkablemark/vite-react-tailwind-template.git
-cd vite-react-tailwind-template
+git clone https://github.com/remarkablemark/python-package-name-checker.git
+cd python-package-name-checker
 ```
 
 Install the dependencies:
