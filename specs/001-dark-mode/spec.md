@@ -38,6 +38,7 @@ A first-time user visits the app on a device configured to use dark mode at the 
 1. **Given** the user's OS is set to dark mode and no stored preference exists, **When** they visit the app for the first time, **Then** the app renders in dark mode.
 2. **Given** the user's OS is set to light mode and no stored preference exists, **When** they visit the app for the first time, **Then** the app renders in light mode.
 3. **Given** the user has a stored preference (e.g., light mode), **When** they visit the app on a device set to dark mode, **Then** the stored preference takes precedence and the app renders in light mode.
+4. **Given** the theme is set to "system" and the app is open, **When** the user changes their OS theme from light to dark (or vice versa), **Then** the app updates to match the new OS theme in real-time without a page reload.
 
 ---
 
@@ -71,7 +72,7 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 - **FR-001**: System MUST provide a visible three-state theme control, positioned as a fixed floating element in the bottom-right corner of the page, that allows switching between light, dark, and system modes.
 - **FR-002**: System MUST apply dark-themed colors to all UI elements (background, text, input field, borders, result messages, links, spinner) when dark mode is active.
 - **FR-003**: System MUST persist the user's theme preference in local storage so it survives page reloads and return visits.
-- **FR-004**: System MUST detect the user's OS-level color scheme preference and apply it dynamically when the theme is set to "system" mode.
+- **FR-004**: System MUST detect the user's OS-level color scheme preference and apply it dynamically when the theme is set to "system" mode, including reacting in real-time to OS theme changes while the page is open.
 - **FR-005**: When the user explicitly selects "light" or "dark", that choice MUST override the OS-level color scheme preference. When set to "system", the OS preference MUST be followed dynamically.
 - **FR-006**: System MUST ensure all text and interactive elements in dark mode meet WCAG 2.1 AA contrast ratio requirements.
 - **FR-007**: The dark mode toggle MUST be keyboard accessible and announce its state to screen readers.
@@ -89,6 +90,7 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 
 - Q: Should the toggle be two-state (light/dark) or three-state (light/dark/system)? → A: Three-state toggle (light / dark / system). "System" follows OS preference dynamically. Default is "system".
 - Q: Where should the theme control be placed in the UI? → A: Bottom-right corner, fixed position (floating).
+- Q: Should the app track OS theme changes live when set to "system" mode? → A: Yes, react in real-time to OS theme changes while the page is open.
 
 ## Success Criteria _(mandatory)_
 
