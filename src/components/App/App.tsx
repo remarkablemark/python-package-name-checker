@@ -7,7 +7,9 @@ export default function App() {
     usePackageChecker();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-4">
+    <main className="flex min-h-screen flex-col items-center px-4">
+      <div className="h-[30vh] shrink-0 sm:h-[35vh]" />
+
       <h1 className="mb-8 text-center text-3xl font-bold text-slate-800 sm:text-4xl md:mb-12 md:text-5xl">
         Python Package Name Checker
       </h1>
