@@ -123,8 +123,11 @@ option.
 
 ### Functional Requirements
 
-- **FR-001**: System MUST provide a text input field for entering a
-  Python package name.
+- **FR-001**: System MUST provide a large, hero-style text input
+  field centered on the page for entering a Python package name.
+  The input MUST use extra-large text (~36–48px), generous padding,
+  and span up to ~700px wide (full-width on mobile). It MUST be
+  the dominant visual element on the page.
 - **FR-002**: System MUST automatically trigger the availability
   check after the user pauses typing (debounced input). No explicit
   submit button is required.
@@ -221,3 +224,6 @@ option.
 - Q: What should the availability result display show? → A:
   Text status with emoji ("✅ Available" / "❌ Taken") plus a
   link to the PyPI project page when the name is taken.
+- Q: What size should the text input be? → A: Extra-large
+  hero-style search input (~36–48px text, ~700px wide, generous
+  padding), centered on the page as the dominant visual element.
