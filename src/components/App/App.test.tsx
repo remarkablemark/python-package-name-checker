@@ -2,6 +2,15 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import App from '.';
 
+const mockCycleTheme = vi.fn();
+vi.mock('src/hooks/useTheme', () => ({
+  default: () => ({
+    themeMode: 'system' as const,
+    resolvedTheme: 'light' as const,
+    cycleTheme: mockCycleTheme,
+  }),
+}));
+
 const mockFetch = vi.fn();
 vi.stubGlobal('fetch', mockFetch);
 
@@ -12,6 +21,7 @@ beforeEach(() => {
 afterEach(() => {
   vi.useRealTimers();
   vi.clearAllMocks();
+  document.documentElement.classList.remove('dark');
 });
 
 describe('App component', () => {
@@ -94,5 +104,25 @@ describe('App component', () => {
     fireEvent.change(input, { target: { value: 'a' } });
 
     expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it('renders ThemeToggle component', () => {
+    render(<App />);
+
+    expect(screen.getByRole('button', { name: /theme/i })).toBeInTheDocument();
+  });
+
+  it('applies dark variant classes to main element', () => {
+    const { container } = render(<App />);
+
+    const main = container.querySelector('main');
+    expect(main?.className).toContain('dark:bg-gray-900');
+  });
+
+  it('applies dark variant classes to heading', () => {
+    render(<App />);
+
+    const heading = screen.getByRole('heading', { level: 1 });
+    expect(heading.className).toContain('dark:text-slate-200');
   });
 });

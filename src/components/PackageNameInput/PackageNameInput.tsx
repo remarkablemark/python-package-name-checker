@@ -15,7 +15,7 @@ export default function PackageNameInput({
       <input
         autoComplete="off"
         spellCheck="false"
-        className="placeholder-light w-full rounded-lg border border-slate-300 px-4 py-3 text-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none sm:px-6 sm:py-4 sm:text-3xl md:px-8 md:py-5 md:text-4xl lg:text-5xl"
+        className="placeholder-light w-full rounded-lg border border-slate-300 px-4 py-3 text-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none sm:px-6 sm:py-4 sm:text-3xl md:px-8 md:py-5 md:text-4xl lg:text-5xl dark:border-gray-600 dark:bg-gray-800 dark:text-slate-100 dark:ring-blue-400"
         id="package-name-input"
         onChange={(event) => {
           onChange(event.target.value);

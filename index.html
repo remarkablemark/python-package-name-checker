@@ -13,6 +13,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Python Package Name Checker</title>
 
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)',
+          ).matches;
+          if (
+            theme === 'dark' ||
+            ((!theme || theme === 'system') && prefersDark)
+          ) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+
     <!--
       GitHub Corners. See https://github.com/remarkablemark/github-corners
     -->
