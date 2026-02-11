@@ -9,7 +9,7 @@
 
 ### User Story 1 - Toggle Dark Mode (Priority: P1)
 
-A user visits the Python Package Name Checker and prefers a dark color scheme to reduce eye strain or match their system preferences. They use a three-state theme control to switch between light, dark, or system mode. When set to light or dark, the app uses that theme regardless of OS settings. When set to system, the app follows the OS color scheme preference dynamically. All UI elements — background, text, input field, borders, result messages, and links — update to match the active theme. The selected mode persists so that returning to the page later retains their preference. The default selection is "system".
+A user visits the Python Package Name Checker and prefers a dark color scheme to reduce eye strain or match their system preferences. They click a cycling icon button to switch between light, dark, or system mode. The button displays an icon representing the current mode (e.g., sun for light, moon for dark, monitor for system) and advances to the next mode on each click. When set to light or dark, the app uses that theme regardless of OS settings. When set to system, the app follows the OS color scheme preference dynamically. All UI elements — background, text, input field, borders, result messages, and links — update to match the active theme. The selected mode persists so that returning to the page later retains their preference. The default selection is "system".
 
 **Why this priority**: This is the core functionality of the feature. Without a working toggle and properly themed UI, there is no dark mode.
 
@@ -69,7 +69,7 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 
 ### Functional Requirements
 
-- **FR-001**: System MUST provide a visible three-state theme control, positioned as a fixed floating element in the bottom-right corner of the page, that allows switching between light, dark, and system modes.
+- **FR-001**: System MUST provide a visible cycling icon button, positioned as a fixed floating element in the bottom-right corner of the page, that cycles through system, light, and dark modes on each click. The button icon MUST change to reflect the current mode (e.g., monitor for system, sun for light, moon for dark).
 - **FR-002**: System MUST apply dark-themed colors to all UI elements (background, text, input field, borders, result messages, links, spinner) when dark mode is active.
 - **FR-003**: System MUST persist the user's theme preference in local storage so it survives page reloads and return visits.
 - **FR-004**: System MUST detect the user's OS-level color scheme preference and apply it dynamically when the theme is set to "system" mode, including reacting in real-time to OS theme changes while the page is open.
@@ -91,6 +91,7 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 - Q: Should the toggle be two-state (light/dark) or three-state (light/dark/system)? → A: Three-state toggle (light / dark / system). "System" follows OS preference dynamically. Default is "system".
 - Q: Where should the theme control be placed in the UI? → A: Bottom-right corner, fixed position (floating).
 - Q: Should the app track OS theme changes live when set to "system" mode? → A: Yes, react in real-time to OS theme changes while the page is open.
+- Q: What widget type should the theme control be? → A: Cycling icon button. Single button that cycles through system → light → dark on each click. Icon changes to reflect current mode (monitor, sun, moon).
 
 ## Success Criteria _(mandatory)_
 
