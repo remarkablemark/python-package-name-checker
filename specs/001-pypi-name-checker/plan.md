@@ -71,6 +71,7 @@ src/
 │   │   └── index.ts
 │   └── Spinner/                # Inline loading spinner icon
 │       ├── Spinner.tsx
+│       ├── Spinner.types.ts
 │       ├── Spinner.test.tsx
 │       └── index.ts
 ├── hooks/

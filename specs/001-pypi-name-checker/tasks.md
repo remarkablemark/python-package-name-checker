@@ -20,7 +20,7 @@
 **Purpose**: Shared types and directory scaffolding needed by all stories
 
 - [ ] T001 Create shared TypeScript interfaces (AvailabilityStatus, CheckResult, CheckResultAvailable, CheckResultTaken, CheckResultError, ValidationResult, ValidationSuccess, ValidationFailure, PackageCheckerState) in src/types/pypi.ts per data-model.md
-- [ ] T002 [P] Create Spinner component directory with barrel export: src/components/Spinner/Spinner.tsx renders an accessible SVG spinner animation (`role="status"`, `aria-label="Loading"`), src/components/Spinner/index.ts re-exports default
+- [ ] T002 [P] Create Spinner component directory with barrel export: src/components/Spinner/Spinner.types.ts (props interface: className), src/components/Spinner/Spinner.tsx renders an accessible SVG spinner animation (`role="status"`, `aria-label="Loading"`), src/components/Spinner/index.ts re-exports default
 - [ ] T003 [P] Write Spinner tests in src/components/Spinner/Spinner.test.tsx — verify renders SVG, has accessible role/label, accepts className prop
 
 **Checkpoint**: Shared types and Spinner component ready — user story implementation can begin

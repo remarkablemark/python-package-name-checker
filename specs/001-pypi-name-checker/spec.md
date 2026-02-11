@@ -243,9 +243,10 @@ option.
 - Q: What style of loading indicator should be used? → A: Inline
   spinner inside the input field (right side).
 - Q: How should non-200/404 HTTP responses be handled? → A:
-  Categorized errors — 429 shows "Please wait and try again",
-  5xx shows "PyPI temporarily unavailable", all others show a
-  generic error message.
+  Categorized errors — 429 shows "Too many requests, please wait
+  and try again", 5xx shows "PyPI is temporarily unavailable,
+  please try again later", all others show "Something went wrong,
+  please try again".
 - Q: How should PyPI's "name too similar" rejection be handled?
   → A: Show a disclaimer when a name is available, noting that
   PyPI may still reject names too similar to existing packages.
