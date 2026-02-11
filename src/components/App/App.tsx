@@ -1,47 +1,33 @@
-import { useState } from 'react';
-
-import brands from './brands';
+import AvailabilityResult from 'src/components/AvailabilityResult';
+import PackageNameInput from 'src/components/PackageNameInput';
+import usePackageChecker from 'src/hooks/usePackageChecker';
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const { inputValue, status, message, projectUrl, normalizedName, onChange } =
+    usePackageChecker();
 
   return (
-    <>
-      <div className="flex justify-center">
-        {brands.map(({ alt, href, src }) => (
-          <a key={href} href={href} rel="nofollow noopener" target="_blank">
-            <img
-              src={src}
-              className="m-4 h-24 hover:drop-shadow-2xl"
-              alt={alt}
-            />
-          </a>
-        ))}
+    <main className="flex min-h-screen flex-col items-center px-4">
+      <div className="h-[30vh] shrink-0 sm:h-[35vh]" />
+
+      <h1 className="mb-8 text-center text-3xl text-slate-800 sm:text-4xl md:mb-12 md:text-5xl">
+        Python Package Name Checker
+      </h1>
+
+      <PackageNameInput
+        inputValue={inputValue}
+        onChange={onChange}
+        status={status}
+      />
+
+      <div className="mt-6 text-center md:mt-8">
+        <AvailabilityResult
+          message={message}
+          normalizedName={normalizedName}
+          projectUrl={projectUrl}
+          status={status}
+        />
       </div>
-
-      <h1 className="my-10 text-5xl font-bold">Vite + React + Tailwind</h1>
-
-      <div className="p-8">
-        <button
-          className="cursor-pointer rounded-md border border-slate-300 bg-slate-50 px-4 py-2 text-center text-sm font-medium text-slate-800 shadow-xs transition-all hover:border-slate-800 focus:border-slate-800 focus:bg-slate-50 active:border-slate-800 active:bg-slate-50 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          onClick={() => {
-            setCount((count) => count + 1);
-          }}
-          type="button"
-        >
-          count is {count}
-        </button>
-
-        <p className="my-4 text-slate-600">
-          Edit{' '}
-          <code className="font-[monospace]">src/components/App/App.tsx</code>{' '}
-          and save to test HMR
-        </p>
-      </div>
-
-      <p className="text-slate-400">
-        Click on the Vite, React, and Tailwind logos to learn more
-      </p>
-    </>
+    </main>
   );
 }

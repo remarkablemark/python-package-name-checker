@@ -1,32 +1,98 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import App from '.';
 
+const mockFetch = vi.fn();
+vi.stubGlobal('fetch', mockFetch);
+
+beforeEach(() => {
+  vi.useFakeTimers();
+});
+
+afterEach(() => {
+  vi.useRealTimers();
+  vi.clearAllMocks();
+});
+
 describe('App component', () => {
-  it('renders without crashing', () => {
+  it('renders heading and input', () => {
     render(<App />);
 
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toBeInTheDocument();
+    expect(heading).toHaveTextContent('Python Package Name Checker');
 
-    const button = screen.getByRole('button', { name: /count is 0/i });
-    expect(button).toBeInTheDocument();
-
-    const images = screen.getAllByRole('img');
-    expect(images).toHaveLength(3);
+    const input = screen.getByRole('textbox');
+    expect(input).toBeInTheDocument();
   });
 
-  it('button click increments count', async () => {
-    const user = userEvent.setup();
+  it('displays taken result after typing a taken package name', async () => {
+    mockFetch.mockResolvedValue({ ok: true, status: 200 });
     render(<App />);
 
-    const button = screen.getByRole('button', { name: /count is 0/i });
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'requests' } });
 
-    await user.click(button);
-    expect(button).toHaveTextContent('count is 1');
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300);
+    });
 
-    await user.click(button);
-    expect(button).toHaveTextContent('count is 2');
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+
+    expect(screen.getByText(/taken/i)).toBeInTheDocument();
+  });
+
+  it('displays available result after typing an available package name', async () => {
+    mockFetch.mockResolvedValue({ ok: false, status: 404 });
+    render(<App />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'xyzzy-not-real' } });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300);
+    });
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+
+    expect(screen.getByText(/available/i)).toBeInTheDocument();
+  });
+
+  it('shows spinner during loading', async () => {
+    let resolveFetch!: (value: unknown) => void;
+    mockFetch.mockReturnValue(
+      new Promise((resolve) => {
+        resolveFetch = resolve;
+      }),
+    );
+
+    render(<App />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'test' } });
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300);
+    });
+
+    expect(screen.getByRole('status')).toBeInTheDocument();
+
+    // Resolve the pending fetch to allow cleanup
+    await act(async () => {
+      resolveFetch({ ok: false, status: 404 });
+      await vi.runAllTimersAsync();
+    });
+  });
+
+  it('debounce prevents immediate fetch', () => {
+    render(<App />);
+
+    const input = screen.getByRole('textbox');
+    fireEvent.change(input, { target: { value: 'a' } });
+
+    expect(mockFetch).not.toHaveBeenCalled();
   });
 });
