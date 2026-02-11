@@ -68,7 +68,7 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 
 ### Functional Requirements
 
-- **FR-001**: System MUST provide a visible three-state theme control that allows switching between light, dark, and system modes.
+- **FR-001**: System MUST provide a visible three-state theme control, positioned as a fixed floating element in the bottom-right corner of the page, that allows switching between light, dark, and system modes.
 - **FR-002**: System MUST apply dark-themed colors to all UI elements (background, text, input field, borders, result messages, links, spinner) when dark mode is active.
 - **FR-003**: System MUST persist the user's theme preference in local storage so it survives page reloads and return visits.
 - **FR-004**: System MUST detect the user's OS-level color scheme preference and apply it dynamically when the theme is set to "system" mode.
@@ -88,6 +88,7 @@ A user with visual accessibility needs uses the app in dark mode. All text, icon
 ### Session 2026-02-11
 
 - Q: Should the toggle be two-state (light/dark) or three-state (light/dark/system)? → A: Three-state toggle (light / dark / system). "System" follows OS preference dynamically. Default is "system".
+- Q: Where should the theme control be placed in the UI? → A: Bottom-right corner, fixed position (floating).
 
 ## Success Criteria _(mandatory)_
 
