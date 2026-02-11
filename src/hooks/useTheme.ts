@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ResolvedTheme, ThemeMode } from 'src/types/theme';
 
-const THEME_KEY = 'theme';
+const THEME_KEY = 'python-package-name-checker.theme';
 const VALID_MODES: ThemeMode[] = ['system', 'light', 'dark'];
 const CYCLE_ORDER: Record<ThemeMode, ThemeMode> = {
   system: 'light',

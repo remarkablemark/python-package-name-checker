@@ -97,9 +97,9 @@ interface ThemeToggleProps {
 | --------- | -------- | ------------------------------- | -------------------- |
 | `"theme"` | `string` | `"system"`, `"light"`, `"dark"` | Missing = `"system"` |
 
-**Read behavior**: On page load, the inline `<head>` script and `useTheme` hook both read `localStorage.getItem('theme')`. If the value is `null`, missing, or not one of the three valid values, it is treated as `"system"`.
+**Read behavior**: On page load, the inline `<head>` script and `useTheme` hook both read `localStorage.getItem('python-package-name-checker.theme')`. If the value is `null`, missing, or not one of the three valid values, it is treated as `"system"`.
 
-**Write behavior**: On each cycle, `localStorage.setItem('theme', newMode)` is called. The value is always one of the three valid strings.
+**Write behavior**: On each cycle, `localStorage.setItem('python-package-name-checker.theme', newMode)` is called. The value is always one of the three valid strings.
 
 **Error handling**: All localStorage access is wrapped in try-catch. On failure (e.g., private browsing), the app falls back to system preference without persisting.
 

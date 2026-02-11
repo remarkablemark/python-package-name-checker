@@ -36,7 +36,7 @@ Add a synchronous inline `<script>` in `index.html` `<head>` (before the body re
 <script>
   (function () {
     try {
-      var theme = localStorage.getItem('theme');
+      var theme = localStorage.getItem('python-package-name-checker.theme');
       var prefersDark = window.matchMedia(
         '(prefers-color-scheme: dark)',
       ).matches;
