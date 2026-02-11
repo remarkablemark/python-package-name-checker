@@ -128,8 +128,10 @@ option.
 - **FR-002**: System MUST automatically trigger the availability
   check after the user pauses typing (debounced input). No explicit
   submit button is required.
-- **FR-003**: System MUST query PyPI to determine whether the
-  entered package name is registered.
+- **FR-003**: System MUST query the PyPI JSON API at
+  `https://pypi.org/pypi/{name}/json` to determine whether the
+  entered package name is registered. An HTTP 200 response indicates
+  the name is taken; an HTTP 404 indicates it is available.
 - **FR-004**: System MUST display a clear "available" or "taken"
   result after the lookup completes.
 - **FR-005**: System MUST display a loading indicator while the
@@ -186,9 +188,10 @@ option.
 
 - The application is a client-side static site with no backend
   server. All PyPI lookups happen directly from the browser.
-- PyPI provides a publicly accessible JSON API that can be called
-  directly from the browser without CORS issues or authentication.
-  No proxy is required.
+- PyPI provides a publicly accessible JSON API at
+  `https://pypi.org/pypi/{name}/json` that can be called directly
+  from the browser without CORS issues or authentication. No proxy
+  is required. HTTP 200 = name taken, HTTP 404 = name available.
 - The application does not store or persist any user data or search
   history.
 
@@ -210,3 +213,6 @@ option.
 - Q: What is the minimum input length before triggering a lookup?
   → A: No minimum — trigger lookup for any non-empty valid input
   (1 character is sufficient).
+- Q: What PyPI endpoint should be used for the lookup? → A:
+  `https://pypi.org/pypi/{name}/json` — HTTP 200 means taken,
+  HTTP 404 means available.
