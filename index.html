@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔍</text></svg>"
+    />
+    <meta
+      name="description"
+      content="Check if a Python package name is available on PyPI (Python Package Index)."
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Package Name Checker</title>
+
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('python-package-name-checker.theme');
+          var prefersDark = window.matchMedia(
+            '(prefers-color-scheme: dark)',
+          ).matches;
+          if (
+            theme === 'dark' ||
+            ((!theme || theme === 'system') && prefersDark)
+          ) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        }
+      })();
+    </script>
+
+    <!--
+      GitHub Corners. See https://github.com/remarkablemark/github-corners
+    -->
+    <script
+      src="https://unpkg.com/github-corners/dist/embed.min.js"
+      data-href="https://github.com/remarkablemark/python-package-name-checker"
+      data-target="_blank"
+      async
+      defer
+    ></script>
+    <style>
+      .github-corner > svg {
+        opacity: 0.5;
+        transition: opacity 0.4s;
+      }
+      .github-corner:hover > svg {
+        opacity: 1;
+      }
+    </style>
+    <script type="module" crossorigin src="/python-package-name-checker/assets/index-R1N1xgu3.js"></script>
+    <link rel="stylesheet" crossorigin href="/python-package-name-checker/assets/index-8R_knEN8.css">
+  </head>
+  <body class="flex min-h-screen min-w-80 place-items-center dark:bg-gray-900">
+    <div
+      class="mx-auto max-w-(--breakpoint-xl) p-8 text-center"
+      id="root"
+    ></div>
+  </body>
+</html>
