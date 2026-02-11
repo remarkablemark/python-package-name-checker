@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { AvailabilityStatus, PackageCheckerState } from 'src/types/pypi';
 import checkPyPI from 'src/utils/checkPyPI';
 import normalizePackageName from 'src/utils/normalizePackageName';
+import validatePackageName from 'src/utils/validatePackageName';
 
 const DEBOUNCE_MS = 300;
 
@@ -31,35 +32,41 @@ export default function usePackageChecker(): UsePackageCheckerReturn {
     const controller = new AbortController();
     controllerRef.current = controller;
 
-    const timer = setTimeout(() => {
+    const timer = setTimeout(async () => {
+      const validation = validatePackageName(trimmed);
+      if (!validation.valid) {
+        setStatus('invalid');
+        setMessage(validation.message);
+        setProjectUrl('');
+        setNormalizedName('');
+        return;
+      }
+
       const normalized = normalizePackageName(trimmed);
       setNormalizedName(normalized);
       setStatus('loading');
 
-      checkPyPI(normalized, controller.signal)
-        .then((result) => {
-          if (result.status === 'taken') {
-            setStatus('taken');
-            setMessage('');
-            setProjectUrl(result.projectUrl);
-          } else if (result.status === 'available') {
-            setStatus('available');
-            setMessage('');
-            setProjectUrl('');
-          } else {
-            setStatus('error');
-            setMessage(result.message);
-            setProjectUrl('');
-          }
-        })
-        .catch((error: unknown) => {
-          if (error instanceof DOMException && error.name === 'AbortError') {
-            return;
-          }
-          setStatus('error');
-          setMessage('Something went wrong, please try again');
+      const result = await checkPyPI(normalized, controller.signal);
+
+      switch (result.status) {
+        case 'taken':
+          setStatus('taken');
+          setMessage('');
+          setProjectUrl(result.projectUrl);
+          break;
+
+        case 'available':
+          setStatus('available');
+          setMessage('');
           setProjectUrl('');
-        });
+          break;
+
+        default:
+          setStatus('error');
+          setMessage(result.message);
+          setProjectUrl('');
+          break;
+      }
     }, DEBOUNCE_MS);
 
     return () => {

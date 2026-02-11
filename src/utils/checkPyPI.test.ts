@@ -57,4 +57,64 @@ describe('checkPyPI', () => {
       { signal: controller.signal },
     );
   });
+
+  it('returns error with rate limit message for HTTP 429', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 429 });
+    const controller = new AbortController();
+
+    const result = await checkPyPI('test', controller.signal);
+
+    expect(result).toEqual({
+      status: 'error',
+      message: 'Too many requests, please wait and try again',
+    });
+  });
+
+  it('returns error with unavailable message for HTTP 500', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
+    const controller = new AbortController();
+
+    const result = await checkPyPI('test', controller.signal);
+
+    expect(result).toEqual({
+      status: 'error',
+      message: 'PyPI is temporarily unavailable, please try again later',
+    });
+  });
+
+  it('returns error with unavailable message for HTTP 503', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 503 });
+    const controller = new AbortController();
+
+    const result = await checkPyPI('test', controller.signal);
+
+    expect(result).toEqual({
+      status: 'error',
+      message: 'PyPI is temporarily unavailable, please try again later',
+    });
+  });
+
+  it('returns error with generic message for network error', async () => {
+    mockFetch.mockRejectedValueOnce(new TypeError('Failed to fetch'));
+    const controller = new AbortController();
+
+    const result = await checkPyPI('test', controller.signal);
+
+    expect(result).toEqual({
+      status: 'error',
+      message: 'Something went wrong, please try again',
+    });
+  });
+
+  it('returns error with generic message for unexpected status', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 301 });
+    const controller = new AbortController();
+
+    const result = await checkPyPI('test', controller.signal);
+
+    expect(result).toEqual({
+      status: 'error',
+      message: 'Something went wrong, please try again',
+    });
+  });
 });

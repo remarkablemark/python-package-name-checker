@@ -164,4 +164,140 @@ describe('usePackageChecker', () => {
     expect(result.current.status).toBe('idle');
     expect(mockFetch).not.toHaveBeenCalled();
   });
+
+  it('invalid input sets status to invalid with validation message', async () => {
+    const { result } = renderHook(() => usePackageChecker());
+
+    act(() => {
+      result.current.onChange('my package');
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+      await Promise.resolve();
+    });
+
+    expect(result.current.status).toBe('invalid');
+    expect(result.current.message).toBe(
+      'Package name can only contain letters, numbers, hyphens, underscores, and periods',
+    );
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it('no fetch is called for invalid input', async () => {
+    const { result } = renderHook(() => usePackageChecker());
+
+    act(() => {
+      result.current.onChange('-invalid');
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+      await Promise.resolve();
+    });
+
+    expect(result.current.status).toBe('invalid');
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it('whitespace-only input sets status to idle', () => {
+    const { result } = renderHook(() => usePackageChecker());
+
+    act(() => {
+      result.current.onChange('   ');
+    });
+
+    expect(result.current.status).toBe('idle');
+  });
+
+  it('transitioning from invalid to valid input triggers lookup', async () => {
+    mockFetch.mockResolvedValue({ ok: false, status: 404 });
+    const { result } = renderHook(() => usePackageChecker());
+
+    act(() => {
+      result.current.onChange('my package');
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+      await Promise.resolve();
+    });
+
+    expect(result.current.status).toBe('invalid');
+
+    act(() => {
+      result.current.onChange('mypackage');
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+
+    expect(result.current.status).toBe('available');
+    expect(mockFetch).toHaveBeenCalled();
+  });
+
+  it('error result sets status to error with categorized message', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 429 });
+    const { result } = renderHook(() => usePackageChecker());
+
+    act(() => {
+      result.current.onChange('test');
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+
+    expect(result.current.status).toBe('error');
+    expect(result.current.message).toBe(
+      'Too many requests, please wait and try again',
+    );
+  });
+
+  it('modifying input after error resets state and triggers new lookup', async () => {
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 500 });
+    const { result } = renderHook(() => usePackageChecker());
+
+    act(() => {
+      result.current.onChange('test');
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+
+    expect(result.current.status).toBe('error');
+
+    mockFetch.mockResolvedValueOnce({ ok: false, status: 404 });
+    act(() => {
+      result.current.onChange('test2');
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(300);
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      await vi.runAllTimersAsync();
+    });
+
+    expect(result.current.status).toBe('available');
+  });
 });

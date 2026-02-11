@@ -59,4 +59,36 @@ describe('AvailabilityResult component', () => {
 
     expect(container.textContent).toBe('');
   });
+
+  it('renders validation message when status is invalid', () => {
+    render(
+      <AvailabilityResult
+        message="Package name can only contain letters, numbers, hyphens, underscores, and periods"
+        normalizedName=""
+        projectUrl=""
+        status="invalid"
+      />,
+    );
+
+    expect(
+      screen.getByText(
+        /Package name can only contain letters, numbers, hyphens, underscores, and periods/,
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it('renders error message when status is error', () => {
+    render(
+      <AvailabilityResult
+        message="Too many requests, please wait and try again"
+        normalizedName=""
+        projectUrl=""
+        status="error"
+      />,
+    );
+
+    expect(
+      screen.getByText(/Too many requests, please wait and try again/),
+    ).toBeInTheDocument();
+  });
 });
