@@ -26,7 +26,12 @@ You're an expert engineer for this React app.
 - **File Structure:**
   - `public/` – app assets
   - `src/` – app code
+    - `src/components/` – React components (each in own directory with barrel export)
+    - `src/hooks/` – custom React hooks
+    - `src/utils/` – pure utility functions
+    - `src/types/` – shared TypeScript interfaces
   - `test/` – test setup
+  - `specs/` – feature specifications and task tracking
 
 ## Commands you can use
 
@@ -61,7 +66,7 @@ You're an expert engineer for this React app.
 import { useState } from 'react';
 import userEvent from '@testing-library/user-event';
 import App from 'src/components/App';
-import brands from './brands';
+import type { PackageCheckerState } from 'src/types/pypi';
 import type { User } from './types';
 ```
 
@@ -96,6 +101,7 @@ import type { User } from './types';
 ### CSS & Styling
 
 - **Tailwind CSS only** - no custom CSS files unless absolutely necessary
+- **Tailwind v4 caveat** - preflight sets `::placeholder` color via `color-mix(in oklab, currentcolor 50%, transparent)` which overrides `placeholder:` utility classes; use unlayered custom CSS in `src/index.css` to override
 - **Responsive design** - use Tailwind responsive prefixes (sm:, md:, lg:)
 - **Component variants** - use Tailwind's utility classes with consistent patterns
 - **Dark mode support** - use dark: prefix when needed
@@ -112,6 +118,7 @@ import type { User } from './types';
 - **100% coverage required** - all statements, branches, functions, and lines
 - **Testing Library** - use @testing-library/react for component testing
 - **User interactions** - use @testing-library/user-event for simulating user actions
+- **Fake timers caveat** - do not mix `userEvent.type` with `vi.useFakeTimers()`; use `fireEvent.change` instead when fake timers are active
 - **Mock external dependencies** - mock API calls, browser APIs, etc.
 - **Descriptive test names** - should clearly state what is being tested
 - **Vitest globals** - use `vi.fn()`, `vi.mock()`, `vi.clearAllMocks()`
@@ -134,6 +141,22 @@ src/components/ComponentName/
 ├── ComponentName.types.ts     # TypeScript interfaces
 ├── ComponentName.test.tsx     # Unit tests
 └── index.ts                   # Barrel export
+```
+
+### Hook Structure
+
+```
+src/hooks/
+├── useHookName.ts             # Hook implementation
+└── useHookName.test.ts        # Hook tests
+```
+
+### Utility Structure
+
+```
+src/utils/
+├── utilityName.ts             # Utility implementation
+└── utilityName.test.ts        # Utility tests
 ```
 
 ### Import Aliases
