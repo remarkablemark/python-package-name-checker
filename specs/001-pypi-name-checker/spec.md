@@ -10,9 +10,11 @@
 ### User Story 1 - Check Package Name Availability (Priority: P1)
 
 A developer wants to check whether a specific Python package name is
-available on PyPI before starting a new project. They visit the site,
-type a package name into a search field, submit it, and immediately
-see whether the name is taken or available.
+available on PyPI before starting a new project. They visit the site
+and begin typing a package name into a search field. After a brief
+pause in typing (debounce), the system automatically checks PyPI and
+displays whether the name is taken or available — no submit button
+is required.
 
 **Why this priority**: This is the core value proposition of the
 entire application. Without this, the tool has no purpose.
@@ -24,18 +26,22 @@ correct availability status is displayed.
 
 **Acceptance Scenarios**:
 
-1. **Given** the user is on the home page, **When** they enter a
-   package name and submit, **Then** the system displays whether the
-   name is available or taken on PyPI.
-2. **Given** the user submits a known existing package name (e.g.,
-   "requests"), **When** the lookup completes, **Then** the system
-   indicates the name is taken.
-3. **Given** the user submits a name that does not exist on PyPI,
-   **When** the lookup completes, **Then** the system indicates the
-   name is available.
-4. **Given** the user submits a name, **When** the lookup is in
-   progress, **Then** the system displays a loading indicator so the
-   user knows the request is being processed.
+1. **Given** the user is on the home page, **When** they type a
+   package name and pause typing (debounce period elapses), **Then**
+   the system automatically checks PyPI and displays whether the
+   name is available or taken.
+2. **Given** the user types a known existing package name (e.g.,
+   "requests") and pauses, **When** the lookup completes, **Then**
+   the system indicates the name is taken.
+3. **Given** the user types a name that does not exist on PyPI and
+   pauses, **When** the lookup completes, **Then** the system
+   indicates the name is available.
+4. **Given** the user has typed a name, **When** the debounced
+   lookup is in progress, **Then** the system displays a loading
+   indicator so the user knows the request is being processed.
+5. **Given** the user is still actively typing, **When** the
+   debounce period has not yet elapsed, **Then** no lookup request
+   is made.
 
 ---
 
@@ -56,16 +62,17 @@ being made.
 
 **Acceptance Scenarios**:
 
-1. **Given** the user has not entered any text, **When** they attempt
-   to submit, **Then** the system prevents submission and displays a
-   message prompting them to enter a package name.
-2. **Given** the user enters a name with invalid characters (e.g.,
-   spaces, uppercase letters that need normalization), **When** they
-   attempt to submit, **Then** the system displays a validation
-   message explaining the naming rules.
-3. **Given** the user enters a valid package name, **When** they
-   submit, **Then** no validation error is shown and the lookup
-   proceeds.
+1. **Given** the input field is empty or contains only whitespace,
+   **When** the debounce period elapses, **Then** no lookup is
+   triggered and no error is displayed.
+2. **Given** the user types a name with invalid characters (e.g.,
+   characters not permitted by PyPI naming rules), **When** the
+   debounce period elapses, **Then** the system displays a
+   validation message explaining the naming rules without making a
+   network request.
+3. **Given** the user types a valid package name, **When** the
+   debounce period elapses, **Then** no validation error is shown
+   and the lookup proceeds automatically.
 
 ---
 
@@ -86,11 +93,13 @@ option.
 
 **Acceptance Scenarios**:
 
-1. **Given** the user submits a valid package name, **When** the
-   network request fails (timeout, server error, no connectivity),
-   **Then** the system displays a user-friendly error message.
+1. **Given** a debounced lookup is triggered for a valid package
+   name, **When** the network request fails (timeout, server error,
+   no connectivity), **Then** the system displays a user-friendly
+   error message.
 2. **Given** an error message is displayed, **When** the user
-   triggers a retry, **Then** the system re-attempts the lookup.
+   modifies the input or triggers a retry action, **Then** the
+   system re-attempts the lookup.
 
 ---
 
@@ -100,9 +109,9 @@ option.
   differently by PyPI (e.g., underscores vs. hyphens, mixed case)?
   The system MUST normalize the name according to PyPI conventions
   before lookup.
-- What happens when the user rapidly submits multiple lookups in
-  succession? The system MUST cancel or ignore stale requests and
-  only display the result for the most recent submission.
+- What happens when the user types rapidly and the input changes
+  before a pending request completes? The system MUST cancel stale
+  requests and only display the result for the most recent input.
 - What happens when the PyPI response is unexpectedly malformed?
   The system MUST handle it gracefully and display a generic error
   rather than crashing.
@@ -116,8 +125,9 @@ option.
 
 - **FR-001**: System MUST provide a text input field for entering a
   Python package name.
-- **FR-002**: System MUST provide a submit action (button and/or
-  Enter key) to initiate the availability check.
+- **FR-002**: System MUST automatically trigger the availability
+  check after the user pauses typing (debounced input). No explicit
+  submit button is required.
 - **FR-003**: System MUST query PyPI to determine whether the
   entered package name is registered.
 - **FR-004**: System MUST display a clear "available" or "taken"
@@ -134,8 +144,11 @@ option.
   lookup.
 - **FR-010**: System MUST normalize package names (hyphens,
   underscores, case) according to PyPI conventions before lookup.
-- **FR-011**: System MUST cancel stale requests when the user
-  submits a new lookup before the previous one completes.
+- **FR-011**: System MUST cancel stale requests when the user's
+  input changes before a pending lookup completes.
+- **FR-012**: System MUST debounce the input so that lookups are
+  only triggered after the user stops typing for a configured
+  delay period.
 
 ### Key Entities
 
@@ -177,3 +190,12 @@ option.
   requiring authentication.
 - The application does not store or persist any user data or search
   history.
+
+## Clarifications
+
+### Session 2026-02-10
+
+- Q: Should the lookup be triggered by a submit button or
+  automatically as the user types? → A: Realtime check with
+  debounce — no submit button. The system automatically queries
+  PyPI after the user pauses typing.
