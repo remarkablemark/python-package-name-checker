@@ -132,8 +132,10 @@ option.
   `https://pypi.org/pypi/{name}/json` to determine whether the
   entered package name is registered. An HTTP 200 response indicates
   the name is taken; an HTTP 404 indicates it is available.
-- **FR-004**: System MUST display a clear "available" or "taken"
-  result after the lookup completes.
+- **FR-004**: System MUST display a text status message after the
+  lookup completes: "✅ Available" when the name is free, or
+  "❌ Taken" when it exists. When the name is taken, the result
+  MUST include a link to `https://pypi.org/project/{name}/`.
 - **FR-005**: System MUST display a loading indicator while the
   lookup is in progress.
 - **FR-006**: System MUST validate the package name against PyPI
@@ -216,3 +218,6 @@ option.
 - Q: What PyPI endpoint should be used for the lookup? → A:
   `https://pypi.org/pypi/{name}/json` — HTTP 200 means taken,
   HTTP 404 means available.
+- Q: What should the availability result display show? → A:
+  Text status with emoji ("✅ Available" / "❌ Taken") plus a
+  link to the PyPI project page when the name is taken.
