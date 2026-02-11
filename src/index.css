@@ -1,6 +1,12 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Override Tailwind v4 preflight's color-mix placeholder color */
 .placeholder-light::placeholder {
   color: var(--color-slate-300);
+}
+
+.dark .placeholder-light::placeholder {
+  color: var(--color-slate-500);
 }
