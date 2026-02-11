@@ -147,8 +147,7 @@ option.
 - **FR-011**: System MUST cancel stale requests when the user's
   input changes before a pending lookup completes.
 - **FR-012**: System MUST debounce the input so that lookups are
-  only triggered after the user stops typing for a configured
-  delay period.
+  only triggered after the user stops typing for 300ms.
 
 ### Key Entities
 
@@ -199,3 +198,6 @@ option.
   automatically as the user types? → A: Realtime check with
   debounce — no submit button. The system automatically queries
   PyPI after the user pauses typing.
+- Q: What should the debounce delay duration be? → A: 300ms
+  (industry standard balance of responsiveness vs. request
+  reduction).
