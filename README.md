@@ -1,4 +1,4 @@
-# python package name checker
+# Python Package Name Checker
 
 [![build](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/build.yml)
 [![test](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/test.yml/badge.svg)](https://github.com/remarkablemark/python-package-name-checker/actions/workflows/test.yml)
