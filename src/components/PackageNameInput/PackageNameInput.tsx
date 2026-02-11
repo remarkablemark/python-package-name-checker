@@ -14,12 +14,13 @@ export default function PackageNameInput({
       </label>
       <input
         autoComplete="off"
-        className="w-full rounded-lg border border-slate-300 px-4 py-3 text-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none sm:px-6 sm:py-4 sm:text-3xl md:px-8 md:py-5 md:text-4xl lg:text-5xl"
+        spellCheck="false"
+        className="placeholder-light w-full rounded-lg border border-slate-300 px-4 py-3 text-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none sm:px-6 sm:py-4 sm:text-3xl md:px-8 md:py-5 md:text-4xl lg:text-5xl"
         id="package-name-input"
-        onChange={(e) => {
-          onChange(e.target.value);
+        onChange={(event) => {
+          onChange(event.target.value);
         }}
-        placeholder="Enter a Python package name"
+        placeholder="Python package name"
         type="text"
         value={inputValue}
       />

@@ -1,1 +1,6 @@
 @import 'tailwindcss';
+
+/* Override Tailwind v4 preflight's color-mix placeholder color */
+.placeholder-light::placeholder {
+  color: var(--color-slate-300);
+}
