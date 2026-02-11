@@ -139,8 +139,8 @@ option.
   lookup completes: "✅ Available" when the name is free, or
   "❌ Taken" when it exists. When the name is taken, the result
   MUST include a link to `https://pypi.org/project/{name}/`.
-- **FR-005**: System MUST display a loading indicator while the
-  lookup is in progress.
+- **FR-005**: System MUST display an inline spinner icon on the
+  right side of the input field while the lookup is in progress.
 - **FR-006**: System MUST validate the package name against PyPI
   naming rules before making a network request.
 - **FR-007**: System MUST display actionable validation error
@@ -227,3 +227,5 @@ option.
 - Q: What size should the text input be? → A: Extra-large
   hero-style search input (~36–48px text, ~700px wide, generous
   padding), centered on the page as the dominant visual element.
+- Q: What style of loading indicator should be used? → A: Inline
+  spinner inside the input field (right side).
