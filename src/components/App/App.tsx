@@ -1,16 +1,19 @@
 import AvailabilityResult from 'src/components/AvailabilityResult';
 import PackageNameInput from 'src/components/PackageNameInput';
+import ThemeToggle from 'src/components/ThemeToggle';
 import usePackageChecker from 'src/hooks/usePackageChecker';
+import useTheme from 'src/hooks/useTheme';
 
 export default function App() {
   const { inputValue, status, message, projectUrl, normalizedName, onChange } =
     usePackageChecker();
+  const { themeMode, resolvedTheme, cycleTheme } = useTheme();
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-4">
+    <main className="flex min-h-screen flex-col items-center px-4 dark:bg-gray-900">
       <div className="h-[30vh] shrink-0 sm:h-[35vh]" />
 
-      <h1 className="mb-8 text-center text-3xl text-slate-600 sm:text-4xl md:mb-12 md:text-5xl">
+      <h1 className="mb-8 text-center text-3xl text-slate-600 sm:text-4xl md:mb-12 md:text-5xl dark:text-slate-200">
         Python Package Name Checker
       </h1>
 
@@ -28,6 +31,12 @@ export default function App() {
           status={status}
         />
       </div>
+
+      <ThemeToggle
+        onCycle={cycleTheme}
+        resolvedTheme={resolvedTheme}
+        themeMode={themeMode}
+      />
     </main>
   );
 }
