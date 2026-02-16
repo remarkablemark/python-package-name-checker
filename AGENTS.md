@@ -48,7 +48,7 @@ You're an expert engineer for this React app.
 
 ### Testing
 
-- **Coverage:** `npm run test:ci` (run tests with coverage report, requires 100% coverage)
+- **Coverage:** `npm run test:ci` (run tests with coverage report)
 - **Single test file:** `npm test -- path/to/test.test.tsx` (run specific test file)
 - **Single test with coverage:** `npm run test:ci -- path/to/test.test.tsx`
 
@@ -114,7 +114,8 @@ import type { User } from './types';
 
 ### Testing Standards
 
-- **100% coverage required** - all statements, branches, functions, and lines
+- **100% coverage required** - all statements, branches, functions, and lines (except for barrel exports)
+- **Do not test barrel exports** - index.ts files are barrel exports and should not have dedicated tests
 - **Testing Library** - use @testing-library/react for component testing
 - **User interactions** - use @testing-library/user-event for simulating user actions
 - **Fake timers caveat** - do not mix `userEvent.type` with `vi.useFakeTimers()`; use `fireEvent.change` instead when fake timers are active
@@ -122,6 +123,7 @@ import type { User } from './types';
 - **Descriptive test names** - should clearly state what is being tested
 - **Vitest globals** - use `vi.fn()`, `vi.mock()`, `vi.clearAllMocks()`
 - **Test setup** - global test environment configured in `vite.config.mts` with `globals: true`
+- **Coverage exclusions** - Use `/* v8 ignore next -- @preserve */` for lines that are not testable
 
 ### Code Quality Rules
 
@@ -160,13 +162,12 @@ src/utils/
 
 ### Import Aliases
 
-- `src/` maps to absolute imports (`src/components/App` → `src/components/App`)
-- `test/` maps to test utilities (`test/mocks/api` → `test/mocks/api`)
+- `src/` maps to absolute imports
 
 ## Boundaries
 
 - ✅ **Always:** Write to `src/`; run lint, type check, and tests before commits; follow naming conventions
-- ⚠️ **Ask first:** Adding dependencies, modifying CI/CD config, changing build configuration
+- ⚠️ **Ask first:** Adding dependencies, modifying CI/CD config, changing build configuration, editing dot files
 - 🚫 **Never:** Commit secrets or API keys, edit `node_modules/`, disable ESLint rules, commit with failing tests
 
 ## Development Notes
