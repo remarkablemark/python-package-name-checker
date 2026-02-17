@@ -79,7 +79,7 @@ describe('useTheme hook', () => {
   });
 
   it('reads initial theme from localStorage', () => {
-    localStorage.setItem('python-package-name-checker.theme', 'dark');
+    localStorage.setItem('theme', 'dark');
     const { result } = renderHook(() => useTheme());
 
     expect(result.current.themeMode).toBe('dark');
@@ -93,13 +93,11 @@ describe('useTheme hook', () => {
       result.current.cycleTheme();
     });
 
-    expect(localStorage.getItem('python-package-name-checker.theme')).toBe(
-      'light',
-    );
+    expect(localStorage.getItem('theme')).toBe('light');
   });
 
   it('resolves to light when mode is explicitly light', () => {
-    localStorage.setItem('python-package-name-checker.theme', 'light');
+    localStorage.setItem('theme', 'light');
     const { result } = renderHook(() => useTheme());
 
     expect(result.current.resolvedTheme).toBe('light');
@@ -107,7 +105,7 @@ describe('useTheme hook', () => {
 
   it('resolves to dark when mode is explicitly dark regardless of OS preference', () => {
     setupMatchMedia(false);
-    localStorage.setItem('python-package-name-checker.theme', 'dark');
+    localStorage.setItem('theme', 'dark');
     const { result } = renderHook(() => useTheme());
 
     expect(result.current.resolvedTheme).toBe('dark');
@@ -123,14 +121,14 @@ describe('useTheme hook', () => {
   it('removes dark class from documentElement when resolved theme is light', () => {
     document.documentElement.classList.add('dark');
     setupMatchMedia(false);
-    localStorage.setItem('python-package-name-checker.theme', 'light');
+    localStorage.setItem('theme', 'light');
     renderHook(() => useTheme());
 
     expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 
   it('treats invalid localStorage values as system', () => {
-    localStorage.setItem('python-package-name-checker.theme', 'invalid-value');
+    localStorage.setItem('theme', 'invalid-value');
     const { result } = renderHook(() => useTheme());
 
     expect(result.current.themeMode).toBe('system');
@@ -187,7 +185,7 @@ describe('useTheme hook', () => {
   });
 
   it('ignores OS preference changes when mode is explicitly light', () => {
-    localStorage.setItem('python-package-name-checker.theme', 'light');
+    localStorage.setItem('theme', 'light');
     const { result } = renderHook(() => useTheme());
 
     expect(result.current.resolvedTheme).toBe('light');
@@ -200,7 +198,7 @@ describe('useTheme hook', () => {
   });
 
   it('ignores OS preference changes when mode is explicitly dark', () => {
-    localStorage.setItem('python-package-name-checker.theme', 'dark');
+    localStorage.setItem('theme', 'dark');
     const { result } = renderHook(() => useTheme());
 
     expect(result.current.resolvedTheme).toBe('dark');

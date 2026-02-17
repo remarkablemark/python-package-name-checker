@@ -14,24 +14,12 @@
     <title>Python Package Name Checker</title>
 
     <script>
-      (function () {
-        try {
-          var theme = localStorage.getItem('python-package-name-checker.theme');
-          var prefersDark = window.matchMedia(
-            '(prefers-color-scheme: dark)',
-          ).matches;
-          if (
-            theme === 'dark' ||
-            ((!theme || theme === 'system') && prefersDark)
-          ) {
-            document.documentElement.classList.add('dark');
-          }
-        } catch (e) {
-          if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-          }
-        }
-      })();
+      document.documentElement.classList.toggle(
+        'dark',
+        localStorage.theme === 'dark' ||
+          (!('theme' in localStorage) &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches),
+      );
     </script>
 
     <!--
