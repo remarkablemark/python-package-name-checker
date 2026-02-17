@@ -13,7 +13,7 @@ export default function App() {
     <main className="flex flex-col items-center px-4 dark:bg-gray-900">
       <div className="h-[30vh] shrink-0 sm:h-[35vh]" />
 
-      <h1 className="mb-8 text-center text-3xl text-slate-600 sm:text-4xl md:mb-12 md:text-5xl dark:text-slate-200">
+      <h1 className="mb-6 text-center text-3xl text-sky-600 sm:text-4xl md:mb-8 md:text-5xl dark:text-slate-200">
         Python Package Name Checker
       </h1>
 
